@@ -22,3 +22,14 @@ And more.
 To reproduce this project, you need access to the Discord API, discord.py, the Gemini API, and the rest is listed in the requirements file, also you should make sure to run that in a virtual environement.
 
 I plan to use a tunned model of the gemini llm in the future, so right now I'm using Google Cloud OAuth to facilitate this transition instead of an API key, since when the time come for me to use the tunned model I will need to access user data and google won't let me access that data just throught the API key. But you can create an account on Google AI Studio, obtain a Gemini API key, and the bot should work as expected by just changing the part of the code in ai_studio_api_call.py that uses load_creds instead of an api key. 
+---
+title: Walithebot
+emoji: 🐢
+colorFrom: pink
+colorTo: red
+sdk: docker
+pinned: false
+license: other
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
