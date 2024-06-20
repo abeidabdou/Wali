@@ -1,5 +1,7 @@
 import google.generativeai as genai
 from load_creds import load_creds
+import time
+import google.api_core.exceptions
 
 
 async def generate_instructions(user_request: str):
@@ -307,8 +309,15 @@ async def generate_instructions(user_request: str):
         "output: ",
     ]
 
-    print(user_request)
-
-    response = model.generate_content(prompt_parts)
-    print(response.text)
-    return response
+    max_retries = 5
+    for attempt in range(max_retries):
+        try:
+            response = model.generate_content(prompt_parts)
+            print(response.text)
+            return response
+        except google.api_core.exceptions.InternalServerError as e:
+            wait_time = 2 ** attempt
+            print(
+                f"Attempt {attempt+1} failed with error: {e}. Retrying in {wait_time} seconds...")
+            time.sleep(wait_time)
+    print("Failed to generate instructions after several attempts.")
