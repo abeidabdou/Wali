@@ -1,0 +1,52 @@
+Delete the 10 messages sent after 235254364 and before the 12 october 2023 in all channels, The user sent too pings in a short period of time. | <sendMessage(You can't use a date and time with a message id on before/after)>
+Delete the 10 messages sent after 235254364 and before 235254365 in all channels, The user sent too pings in a short period of time.|<sendMessage(To delete messages in multiple channels using before/after you need a date and time.)>
+the 12 september at 12am and before the 12 october 2023|<deleteMessage channel[0] after(2023-09-12 00:00:00) before(2023-10-12 12:00:00) reason(The user sent too pings in a short period of time.)>
+delete message sent before the 12 may of this year and after the 4 january|<sendMessage(Please provide me with valid dates; you can't use this year, this month, etc..., also provide a reason)>
+2024, I am doing a server a cleanup|<deleteMessage channel[1] after(2024-01-04 00:00:00) before(2024-05-12 12:00:00) reason(I am doing a server a cleanup)>
+peut effacer les messages envoyer entre le 17 mai a 12h et et le 18 main 2024 a 10h35 pm|<sendMessage(Quel est la raison ?)>
+J'ai besoin de faire un nettoyage du serveur.|<deleteMessage channel[1] after(2024-05-17 12:00:00) before(2024-05-18 22:35:00) reason(J'ai besoin de faire un nettoyage du serveur.)>
+peut tu effacer tout les messages envoyer entre 2h30am et 3h00am, je teste quelque chose|<deleteMessage channel[1] after(year.now-month.now-day.now 02:30:00) before(year.now-month.now-day.now 03:00:00) reason(je teste quelque chose)>
+peut-tu effacer les 10 derniers messages que j'ai envoye|<sendMessage(J'ai besoin d'une raison ?)>
+J'ai fait une erreur dans les messages envoyes.|<deleteMessage channel[1] user[1] limit(10) reason(J'ai fait une erreur dans les messages envoyes.)>
+delete messages between 1241628887868506164 and 1241628917136359514|<sendMessage(Please provide me with a reason)>
+Just checking if one of your functionalities is working.|<deleteMessage after(1241628887868506164) before(1241628917136359514) reason(Just checking if one of your functionalities is working.)>
+delete message between 1241628906767913031 and 1240968371143704607, I am trying to see something|<deleteMessage after(1240968371143704607) before(1241628906767913031) reason(I am trying to see something)>
+delete all messages sent in channel test and wal-i, just trying something|deleteMessage channel[test, wal-i] reason(just trying something)
+delete all messages I sent in all channels|<sendMessage(Please provide a reason)>
+I am trying to see something|<deleteMessage channel[0] user[1] reason(I am trying to see something)>
+delete messages I sent in all channels|<sendMessage(Please provide a reason and a limit)>
+I am trying to see something. 10|<deleteMessage channel[0] user[1] limit(10) reason(I am trying to see something)>
+delete all messages sent by me|<sendMessage(Please provide a reason)>
+I am trying to see something|<deleteMessage channel[1] user[1] reason(I am trying to see something)>
+efface les messages que j'ai envoye|<sendMessage(Pour quel raison ? Et quel est la limite)>
+J'ai fait une erreur dans les messages envoyes. 10|<deleteMessage channel[1] user[1] limit(10) reason(J'ai fait une erreur dans les messages envoyes.)>
+efface tout les messages envoye par moi|<sendMessage(Pour quel raison ?)>
+J'ai fait une erreur dans les messages envoyes.|<deleteMessage channel[1] user[1] reason(J'ai fait une erreur dans les messages envoyes.)>
+delete message between 1241688224150065193 and 1241688199340888114 in channel test, I am trying to see something|<deleteMessage after(1241688199340888114) before(1241688224150065193) reason(I am trying to see something)>
+make the following channel private|<sendMessage(Please provide me with the name of the channel)>
+RN|<updateChannel[RN] role[everyone] removePermissons[read_messages]>
+let everyone access the following channel DF|<updateChannel[DF] role[everyone] addPermissons[read_messages]>
+Let the role gost access the following channel DF|<updateChannel[DF] role[gost] addPermissons[read_messages]>
+give member permission to add attachements in the following channel DF|<updateChannel[DF] role[everyone] addPermissons[attach_files]>
+remove sali permission to send message in the following channel DF and gost|<updateChannel[DF, gost] role[sali] removePermissons[send_messages, send_messages_in_threads]>
+reverse WAssap channel to private|<updateChannel[WAssap] role[everyone] removePermissons[read_messages]>
+add the role admin to the following channel DF|<updateChannel[DF] role[admin] addPermissons[read_messages]>
+remove the role ldfg to ali|<editMember[ali] removeRole[ldfg]>
+add the role ldfg to ali|<editMember[ali] addRole[ldfg]>
+mute ali|<editMember[ali] mute>
+unmute ali|<editMember[ali] unmute>
+ban ali|<sendMessage(Please provide a reason)>
+He insulted another member.|<editMember[ali] ban reason(He insulted another member.)>
+kick ali|<sendMessage(Please provide a reason)>
+He insulted another member.|<editMember[ali] kick reason(He insulted another member.)>
+Timeout ali|<sendMessage(Please provide a reason and duration options are: 60 SECS, 5 MINS, 10 MINS, 1 HOUR, 1 DAY, and 1 WEEK)>
+He insulted another member. 1 HOUR|<editMember[ali] timeout duration(1 HOUR) reason(He insulted another member.)>
+mute ali soundboard|<editMember[ali] muteSoundBoard>
+unmute ali soundboard|<editMember[ali] unmuteSoundBoard>
+ban ali and delete the last messages he sent, he doesn't follow the rules|<sendMessage(Please be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days)>
+Previous 24 Hours|<editMember[ali] ban reason(he doesn't follow the rules) deleteMessage(Previous 24 Hours)>
+ban ali, he doesn't follow the rules|<editMember[ali] ban reason(he doesn't follow the rules)>
+kick ali|<sendMessage(Please provide a reason)>
+He insulted another member.|<editMember[ali] kick reason(He insulted another member.)>
+kick legarsolo|<sendMessage(Please provide a reason)>
+He insulted another member.|<editMember[legarsolo] kick reason(He insulted another member.)>
