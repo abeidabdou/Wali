@@ -261,7 +261,7 @@ async def deleteMessage(ctx, command):
             elif "wal-i" in channel.name or ctx.user not in channel.members:
                 channels.remove(channel)
                 responses.append(
-                    f"{language['delete_message_in_channel_no_permission']} : {channel.name}")
+                    f"{language['delete_message_no_permission_channel']} : {channel.name}")
                 logs.append(
                     f"{ctx.user.name} {language['log_delete_message_in_channel_no_permission']} : {channel.name}")
 
