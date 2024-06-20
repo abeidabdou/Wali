@@ -258,7 +258,7 @@ async def deleteMessage(ctx, command):
                 responses.append(
                     f"{language['delete_message_category_and_forum_no']}: {channel.name} {language['is']} {channel.type}")
 
-            if ("wal-i" in channel.name or ctx.user not in channel.members) and channel.type not in (discord.ChannelType.category):
+            if channel.type not in (discord.ChannelType.category) and ("wal-i" in channel.name or ctx.user not in channel.members) :
                 channels.remove(channel)
                 responses.append(
                     f"{language['delete_message_in_channel_no_permission']} : {channel.name}")
