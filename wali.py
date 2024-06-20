@@ -1,6 +1,5 @@
 import discord
 import os
-import json
 from ai_studio_api_call import generate_instructions
 import re
 from events.onDeleteMessage import onMessageDelete
