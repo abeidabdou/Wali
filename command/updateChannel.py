@@ -3,10 +3,13 @@ from command.loadCommand import load_command
 import re
 import json
 
+from parameters.logActions import logActions
+
 
 async def updateChannel(ctx, command):
 
     responses = []
+    logs = []
 
     if ctx.user.id == ctx.guild.owner_id:
 
@@ -26,7 +29,7 @@ async def updateChannel(ctx, command):
 
         matches_dict = {
             "updateChannel": None,
-            "user_role": None,
+            "role": None,
             "addPermissons": None,
             "removePermissons": None
         }
@@ -43,17 +46,19 @@ async def updateChannel(ctx, command):
             channel_names = matched_names.split(',')
             channel_names = [name.strip(" ").strip('"') for name in channel_names]
             for chan in channel_names:
+                channel = None
                 if chan.isdigit():
                     channel = guild.get_channel(int(chan))
                     channels.append(channel)
-                else:
+                elif not chan.isdigit():
                     channel = discord.utils.get(guild.channels, name=chan.lower())
                     channels.append(channel)
-                if not channel:
-                    responses.append(f"{language['no_channel_found']} : {channel}")
+                
+                if channel==None:
+                    responses.append(f"{language['no_channel_found']} : {chan}")
 
-        if matches_dict["user_role"]:
-            role_names = matches_dict["user_role"][1]
+        if matches_dict["role"]:
+            role_names = matches_dict["role"][1]
             role_names = role_names.split(',')
             role_names = [name.strip(" ").strip('"')
                             for name in role_names]
@@ -68,14 +73,14 @@ async def updateChannel(ctx, command):
                         roles.append(role)
                     else:
                             responses.append(
-                                f"{language['no_user_or_role_found']} : {role_name}")
+                                f"{language['no_role_found']} : {role_name}")
                 else:
                     role = discord.utils.get(guild.roles, name=role_name.lower())
                     if role:
                         roles.append(role)
                     else:
                             responses.append(
-                                f"{language['no_user_or_role_found']} : {role_name}")
+                                f"{language['no_role_found']} : {role_name}")
 
         if matches_dict["addPermissons"]:
             add_permissions = matches_dict["addPermissons"][1]
@@ -94,6 +99,9 @@ async def updateChannel(ctx, command):
                 if not roles:
                     break
 
+                if not channel:
+                    break
+
                 for target in roles:
                     overwrites = channel.overwrites_for(target)
 
@@ -103,6 +111,8 @@ async def updateChannel(ctx, command):
                             await channel.set_permissions(target, overwrite=overwrites)
                             responses.append(
                                 f"{language['permissions_updated']} : {perm}, {channel.name} {language['for']} {target.name}")
+                            logs.append(
+                                f"```{language['permissions_updated']} : {perm}, \n{language['channel']} {channel.name}, \nrole: {target.name}```")
                         except:
                             responses.append(
                                 f"{language['invalid_permissions']} : {perm}, {channel.name} {language['for']} {target.name}")
@@ -112,17 +122,23 @@ async def updateChannel(ctx, command):
                             await channel.set_permissions(target, overwrite=overwrites)
                             responses.append(
                                 f"{language['permissions_updated']} : {perm}, {channel.name} {language['for']} {target.name}")
+                            logs.append(
+                                f"```{language['permissions_updated']} : {perm}, \n{language['channel']} {channel.name}, \nrole: {target.name}```")
                         except:
                             responses.append(
                                 f"{language['invalid_permissions']} : {perm}, {channel.name} {language['for']} {target.name}")
 
         else:
             responses.append(
-                f"{language['update_channel_invalid_parameter']} : {miscellaneous_match}")
+                f"{language['invalid']}")
             
     else:
         pass
 
-    messageToSend = '\n'.join(responses)
+    if logs:
+        log_action = logs
+        await logActions(log_action, ctx.guild)
+
+    messageToSend = responses
     command_func = await load_command("sendMessage")
     await command_func(ctx, messageToSend)

@@ -1,52 +1,180 @@
-Delete the 10 messages sent after 235254364 and before the 12 october 2023 in all channels, The user sent too pings in a short period of time. | <sendMessage(You can't use a date and time with a message id on before/after)>
-Delete the 10 messages sent after 235254364 and before 235254365 in all channels, The user sent too pings in a short period of time.|<sendMessage(To delete messages in multiple channels using before/after you need a date and time.)>
-the 12 september at 12am and before the 12 october 2023|<deleteMessage channel[0] after(2023-09-12 00:00:00) before(2023-10-12 12:00:00) reason(The user sent too pings in a short period of time.)>
-delete message sent before the 12 may of this year and after the 4 january|<sendMessage(Please provide me with valid dates; you can't use this year, this month, etc..., also provide a reason)>
-2024, I am doing a server a cleanup|<deleteMessage channel[1] after(2024-01-04 00:00:00) before(2024-05-12 12:00:00) reason(I am doing a server a cleanup)>
-peut effacer les messages envoyer entre le 17 mai a 12h et et le 18 main 2024 a 10h35 pm|<sendMessage(Quel est la raison ?)>
-J'ai besoin de faire un nettoyage du serveur.|<deleteMessage channel[1] after(2024-05-17 12:00:00) before(2024-05-18 22:35:00) reason(J'ai besoin de faire un nettoyage du serveur.)>
-peut tu effacer tout les messages envoyer entre 2h30am et 3h00am, je teste quelque chose|<deleteMessage channel[1] after(year.now-month.now-day.now 02:30:00) before(year.now-month.now-day.now 03:00:00) reason(je teste quelque chose)>
-peut-tu effacer les 10 derniers messages que j'ai envoye|<sendMessage(J'ai besoin d'une raison ?)>
-J'ai fait une erreur dans les messages envoyes.|<deleteMessage channel[1] user[1] limit(10) reason(J'ai fait une erreur dans les messages envoyes.)>
-delete messages between 1241628887868506164 and 1241628917136359514|<sendMessage(Please provide me with a reason)>
-Just checking if one of your functionalities is working.|<deleteMessage after(1241628887868506164) before(1241628917136359514) reason(Just checking if one of your functionalities is working.)>
-delete message between 1241628906767913031 and 1240968371143704607, I am trying to see something|<deleteMessage after(1240968371143704607) before(1241628906767913031) reason(I am trying to see something)>
-delete all messages sent in channel test and wal-i, just trying something|deleteMessage channel[test, wal-i] reason(just trying something)
-delete all messages I sent in all channels|<sendMessage(Please provide a reason)>
-I am trying to see something|<deleteMessage channel[0] user[1] reason(I am trying to see something)>
-delete messages I sent in all channels|<sendMessage(Please provide a reason and a limit)>
-I am trying to see something. 10|<deleteMessage channel[0] user[1] limit(10) reason(I am trying to see something)>
-delete all messages sent by me|<sendMessage(Please provide a reason)>
-I am trying to see something|<deleteMessage channel[1] user[1] reason(I am trying to see something)>
-efface les messages que j'ai envoye|<sendMessage(Pour quel raison ? Et quel est la limite)>
-J'ai fait une erreur dans les messages envoyes. 10|<deleteMessage channel[1] user[1] limit(10) reason(J'ai fait une erreur dans les messages envoyes.)>
-efface tout les messages envoye par moi|<sendMessage(Pour quel raison ?)>
-J'ai fait une erreur dans les messages envoyes.|<deleteMessage channel[1] user[1] reason(J'ai fait une erreur dans les messages envoyes.)>
-delete message between 1241688224150065193 and 1241688199340888114 in channel test, I am trying to see something|<deleteMessage after(1241688199340888114) before(1241688224150065193) reason(I am trying to see something)>
-make the following channel private|<sendMessage(Please provide me with the name of the channel)>
-RN|<updateChannel[RN] role[everyone] removePermissons[read_messages]>
-let everyone access the following channel DF|<updateChannel[DF] role[everyone] addPermissons[read_messages]>
-Let the role gost access the following channel DF|<updateChannel[DF] role[gost] addPermissons[read_messages]>
-give member permission to add attachements in the following channel DF|<updateChannel[DF] role[everyone] addPermissons[attach_files]>
-remove sali permission to send message in the following channel DF and gost|<updateChannel[DF, gost] role[sali] removePermissons[send_messages, send_messages_in_threads]>
-reverse WAssap channel to private|<updateChannel[WAssap] role[everyone] removePermissons[read_messages]>
-add the role admin to the following channel DF|<updateChannel[DF] role[admin] addPermissons[read_messages]>
-remove the role ldfg to ali|<editMember[ali] removeRole[ldfg]>
-add the role ldfg to ali|<editMember[ali] addRole[ldfg]>
-mute ali|<editMember[ali] mute>
-unmute ali|<editMember[ali] unmute>
-ban ali|<sendMessage(Please provide a reason)>
-He insulted another member.|<editMember[ali] ban reason(He insulted another member.)>
-kick ali|<sendMessage(Please provide a reason)>
-He insulted another member.|<editMember[ali] kick reason(He insulted another member.)>
-Timeout ali|<sendMessage(Please provide a reason and duration options are: 60 SECS, 5 MINS, 10 MINS, 1 HOUR, 1 DAY, and 1 WEEK)>
-He insulted another member. 1 HOUR|<editMember[ali] timeout duration(1 HOUR) reason(He insulted another member.)>
-mute ali soundboard|<editMember[ali] muteSoundBoard>
-unmute ali soundboard|<editMember[ali] unmuteSoundBoard>
-ban ali and delete the last messages he sent, he doesn't follow the rules|<sendMessage(Please be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days)>
-Previous 24 Hours|<editMember[ali] ban reason(he doesn't follow the rules) deleteMessage(Previous 24 Hours)>
-ban ali, he doesn't follow the rules|<editMember[ali] ban reason(he doesn't follow the rules)>
-kick ali|<sendMessage(Please provide a reason)>
-He insulted another member.|<editMember[ali] kick reason(He insulted another member.)>
-kick legarsolo|<sendMessage(Please provide a reason)>
-He insulted another member.|<editMember[legarsolo] kick reason(He insulted another member.)>
+input | output
+delete message | sendMessage("Please provide the message to delete and a reason")
+23424234, member doesn't respect the rules | deleteMessage[23424234] reason("member doesn't respect the rules")
+Delete this message to ensure privacy. 32109876 | deleteMessage[32109876] reason("ensure privacy")
+wal-i this message needs to be removed | sendMessage("You didn't provide a message to delete and a reason")
+23424234, 32109876, member doesn't respect the rules | deleteMessage[23424234, 32109876] reason("member doesn't respect the rules")
+Can you delete this message 276876758732 ? The reason is that the member did not follow the rules. | deleteMessage[276876758732] reason("member did not follow the rules")
+Delete this message 276876758732 ? The member insulted another member. | deleteMessage[276876758732] reason("member insulted another member")
+delete the last 30 messages in all channels | sendMessage("Please provide a reason for deleting those messages")
+The member sent too many messages in a short period of time | deleteMessage channel[0] limit(30) reason("The member sent too many messages in a short period of time.")
+delete the last messages in test. The member sent too many messages in a short period of time. | sendMessage("Please provide a valid limit for the messages to delete")
+10 | deleteMessage channel["test"] limit(10) reason("The member sent too many messages in a short period of time.")
+delete the last 30 messages in test. The member sent too many messages in a short period of time. | deleteMessage channel["test"] limit(30) reason("The member sent too many messages in a short period of time.")
+Delete the last 20 messages sent here. The member sent too many messages in a short period of time. | deleteMessage channel[1] limit(20) reason("The member sent too many messages in a short period of time.")
+Delete the 10 messages sent before 23423424532 in test, The member sent too pings in a short period of time. | deleteMessage before(23423424532) limit(10) reason("The member sent too pings in a short period of time.")
+delete the last message sent before 23423424532, The member sent too much pings in a short period of time. | deleteMessage before(23423424532) limit(1) reason("The member sent too much pings in a short period of time.")
+Delete the last messages sent before 23423424532 in test, The member sent too pings in a short period of time. | sendMessage("Please provide a limit")
+10 | deleteMessage before(23423424532) limit(10) reason("The member sent too pings in a short period of time.")
+delete the last 10 messages sent before in channel test, The member sent too much pings in a short period of time. | sendMessage("You didn't provide a valid before parameter")
+23423424532 | deleteMessage before(23423424532) limit(10) reason("The member sent too much pings in a short period of time.")
+delete the last 10 messages sent after 2375672242 in channel test, The member sent too much pings in a short period of time. | deleteMessage after(2375672242) limit(10) reason("The member sent too much pings in a short period of time.")
+delete the last 10 messages sent after 2375672242. | sendMessage("Please provide a reason for deleting those messages")
+The member sent too many messages in a short period of time | deleteMessage after(2375672242) limit(10) reason("The member sent too many messages in a short period of time.")
+delete the messages sent after 2375672242 and before 23423424532 in channel test. | sendMessage("Please provide a reason for deleting those messages")
+member isn't respecting the rules | deleteMessage after(2375672242) before(23423424532) reason("member isn't respecting the rules")
+delete the messages sent after 2375672242 and before 23423424532 in channel test. The member sent too much pings in a short period of time. | deleteMessage after(2375672242) before(23423424532) reason("The member sent too much pings in a short period of time.")
+delete the messages sent after and before 23423424532 in channel test. The member sent too much pings in a short period of time. | sendMessage("Please provide a valid after parameter") 
+2375672242 | deleteMessage after(2375672242) before(23423424532) reason("The member sent too much pings in a short period of time.")
+delete the last 10 messages ali sent in channel test | sendMessage("Please provide a reason for deleting those messages")
+The member sent too many messages in a short period of time | deleteMessage channel["test"] member["ali"] limit(10) reason("The member sent too many messages in a short period of time.")
+delete the last 10 messages the member ali sent in channel test. He sent too much pings in a short period of time. | deleteMessage channel["test"] member["ali"] limit(10) reason("He sent too much pings in a short period of time.")
+delete the last 10 messages I sent in channel test. | sendMessage("Please provide a reason for deleting those messages")
+The member sent too many messages in a short period of time | deleteMessage channel["test"] member[1] limit(10) reason("The member sent too many messages in a short period of time.")
+Delete the 20 messages ali sent before 23423424532 in channel test. He sent too much pings in a short period of time. | deleteMessage member["ali"] before(23423424532) limit(20) reason("He sent too much pings in a short period of time.")
+Delete the 20 messages ali sent after 34534563464 in channel test. He sent too much pings in a short period of time. | deleteMessage member["ali"] after(34534563464) limit(20) reason("He sent too much pings in a short period of time.")
+delete messages with stp and 🫡 in channel test sent by ali, member is insulting | sendMessage("What is the limit please")
+no limit | deleteMessage channel["test"] member["ali"] message_contains["stp", "🫡"] limit(None) reason("member is insulting")
+delete messages with stp in channel test sent by ali before this message 23453534536, member is making an insult. | sendMessage("Please provide a limit")
+10 | deleteMessage member["ali"] message_contains["stp"] before(23453534536) limit(10) reason("member is making an insult.")
+delete messages with stp in channel test sent by ali after 23453534536 and before 23423424532, member is making an insult. | deleteMessage member["ali"] message_contains["stp"] after(23453534536) before(23423424532) reason("member is making an insult.")
+delete messages with stp in channel test sent by ali after 23453534536, member is making an insult. | sendMessage("Please provide me with a limit")
+limit none | deleteMessage member["ali"] message_contains["stp"] after(23453534536) limit(None) reason("member is making an insult.")
+delete messages with stp in channel test sent by ali after 23453534536 and before 23423424532 limit 10, member is making an insult. | deleteMessage member["ali"] message_contains["stp"] after(23453534536) before(23423424532) reason("member is making an insult.")
+delete messages with stp in channel test sent by ali after 23453534536 and before 23423424532. member is making an insult. | deleteMessage member["ali"] message_contains["stp"] after(23453534536) before(23423424532) reason("member is making an insult.")
+delete all messages containing stupid, I am testing something | sendMessage("Please provide a limit")
+10 | deleteMessage channel[1] message_contains["stupid"] limit(10) reason("I am testing something")
+delete all messages with links, I am testing something | sendMessage("Please provide a limit")
+no limit | deleteMessage channel[1] attachement["links"] limit(None) reason("I am testing something")
+delete any message with image in channel test, I am testing something | sendMessage("Please provide a limit")
+10 | deleteMessage channel["test"] attachement["image"] limit(10) reason("I am testing something")
+delete all messages with video in channel test, I am testing something | sendMessage("Please provide a limit")
+no limit | deleteMessage channel["test"] attachement["video"] limit(None) reason("I am testing something")
+delete all messages sent by ali | sendMessage("Please provide a reason for deleting those messages, and a limit")
+The member sent too many messages in a short period of time, no limit | deleteMessage member["ali"] limit(None) reason("The member sent too many messages in a short period of time.")
+delete the last message sent here | sendMessage("Please provide a reason for deleting that message")
+member is making an insult. | deleteMessage channel[1] limit(1) reason("member is making an insult.")
+delete messages in all channel | sendMessage("Please provide a reason for deleting those messages plus a limit")
+Doing a server cleanup, limit 100 | deleteMessage channel[0] limit(100) reason("Doing a server cleanup")
+delete the last messages in all channels | sendMessage("Please provide a reason for deleting those message and a limit")
+The members were insulting each other when I was gone, limit 134 | deleteMessage channel[0] limit(134) reason("The members were insulting each other when I was gone")
+delete messages with any attachement, member are not authorized to send attachements | sendMessage("Please provide a limit")
+10 | deleteMessage channel[1] attachement["all"] limit(10) reason("member are not authorized to send attachements")
+delete the last 10 messages in all channels with any attachement, member are not authorized to send attachements | deleteMessage channel[0] attachement["all"] limit(10) reason("member are not authorized to send attachements")
+delete the last 10 messages I sent, I am testing something | deleteMessage channel[1] member[1] limit(10) reason("I am testing something")
+could you delete the messages sent by <@905696511197872169> | sendMessage("Please provide a reason for deleting those messages, and a limit")
+limit none, he is being disrespectful | deleteMessage channel[1] member[905696511197872169] limit(None) reason("he is being disrespectful")
+<@905696511197872169> sent multiple messages at the same time could you delete them | sendMessage("Please provide a limit")
+10 | deleteMessage channel[1] member[905696511197872169] limit(10) reason("he sent multiple messages at the same time")
+Delete messages sent before the 12 october 2023 in all channels, The members sent too much pings in a short period of time. | sendMessage("Please provide me with a limit.")
+200 | deleteMessage channel[0] before(2023-10-12 00:00:00) limit(200) reason("The members sent too pings in a short period of time.")
+Delete all messages sent after the 23 january at 12am in all channels, doing a server cleanup.  | deleteMessage channel[0] after(2023-01-23 12:00:00) limit(None) reason("Doing a server cleanup.")
+Delete the 10 messages sent after the 23 january at 12am and before 12pm in all channels, The member sent too pings in a short period of time | deleteMessage channel[0] after(2023-01-23 12:00:00) before(2023-02-23 00:00:00) reason("The member sent too pings in a short period of time.")
+Delete the 10 messages sent today at 12am and before the 12 october 2023 in all channels, The member sent too pings in a short period of time | deleteMessage channel[0] after(year.now-month.now-day.now 12:00:00) before(2023-10-12 00:00:00) reason("The member sent too pings in a short period of time.")
+Delete the 10 messages sent yesterday at 12am and before the 12 october 2023 in all channels, The member sent too pings in a short period of time | sendMessage("Please provide me with a valid time: appart from today which I understand that it's the current day other terms like tomorrow, this month, this year, this week, monday, tuesday, yesterday etc... aren't valid\")
+Delete the 10 messages sent the 12 september at 12am and before the 12 october 2023 in all channels, The member sent too pings in a short period of time | deleteMessage channel[0] after(2023-09-12 12:00:00) before(2023-10-12 00:00:00) reason("The member sent too pings in a short period of time.")
+Delete the 10 messages sent after 235254364 and before the 12 october 2023 in all channels, The member sent too pings in a short period of time | sendMessage("You can't use a date and time with a message id on before/after")
+Delete the 10 messages sent after 235254364 and before 235254364 in all channels, The member sent too pings in a short period of time | sendMessage("To delete messages in multiple channels using before/after you need a date and time.")
+the 12 september at 12am and before the 12 october 2023 | deleteMessage channel[0] after(2023-09-12 12:00:00) before(2023-10-12 00:00:00) reason("The member sent too pings in a short period of time.")
+delete message sent before the 12 may of this year and after the 4 january | sendMessage("Please provide me with valid dates; you can't use this year, this month, etc..., also provide a reason")
+2024, I am doing a server a cleanup | deleteMessage channel[1] after(2024-01-04 00:00:00) before(2024-05-12 00:00:00) reason("I am doing a server a cleanup")
+delete messages between 1241628887868506164 and 1241628917136359514 | sendMessage("Please provide a reason for deleting those messages")
+Just checking if one of your functionalities is working | deleteMessage after(1241628887868506164) before(1241628917136359514) reason("Just checking if one of your functionalities is working.")
+delete message between 1241628906767913031 and 1240968371143704607, I am trying to see something | deleteMessage after(1240968371143704607) before(1241628906767913031) reason("I am trying to see something")
+delete all messages sent in channel test and wal-i, just trying something | sendMessage("Please provide a limit")
+None | deleteMessage channel["test", "wal-i"] limit(None) reason("just trying something")
+delete all messages I sent in all channels | sendMessage("Please provide a reason for deleting those messages, and a limit")
+I am testing something, no limit | deleteMessage channel[0] member[1] limit(None) reason("I am testing something")
+delete all messages sent by me | sendMessage("Please provide a reason for deleting those messages, and a limit")
+I am testing something, no limit | deleteMessage channel[1] member[1] limit(None) reason("I am testing something")
+make the following channel private | sendMessage("Please provide me with the channels")
+RN | updateChannel["RN"] role["everyone"] removePermissons["read_messages"]
+let everyone access the following channel DF | updateChannel["DF"] role["everyone"] addPermissons["read_messages"]
+Let the role gost access the following channel DF | updateChannel["DF"] role["gost"] addPermissons["read_messages"]
+give member permission to add attachements in the following channel DF | updateChannel["DF"] role["everyone"] addPermissons["attach_files"]
+remove sali permission to send message in the following channel DF and gost | updateChannel["DF", "gost"] role["sali"] removePermissons["send_messages", "send_messages_in_threads"]
+reverse WAssap channel to private | updateChannel["WAssap"] role["everyone"] removePermissons["read_messages"]
+add the role admin to the following channel DF | updateChannel["DF"] role["admin"] addPermissons["read_messages"]
+remove the role ldfg to ali | editMember["ali"] removeRole["ldfg"]
+add the role ldfg to ali | editMember["ali"] addRole["ldfg"]
+mute ali | editMember["ali"] mute
+unmute ali | editMember["ali"] unmute
+ban ali | sendMessage("Please provide a reason")
+He insulted another member. | editMember["ali"] ban reason("He insulted another member.")
+kick ali | sendMessage("Please provide a reason")
+He insulted another member. | editMember["ali"] kick reason("He insulted another member.")
+Timeout ali | sendMessage("Please provide a reason and duration options are: 60 SECS, 5 MINS, 10 MINS, 1 HOUR, 1 DAY, and 1 WEEK")
+He insulted another member. 1 HOUR | editMember["ali"] timeout duration("1 HOUR") reason("He insulted another member.")
+mute ali soundboard | editMember["ali"] muteSoundBoard
+unmute ali soundboard | editMember["ali"] unmuteSoundBoard
+ban ali and delete the last messages he sent, he doesn't follow the rules | sendMessage("Please be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days")
+Previous 24 Hours | editMember["ali"] ban reason("he doesn't follow the rules") deleteMessage("Previous 24 Hours")
+ban ali, he doesn't follow the rules | editMember["ali"] ban reason("he doesn't follow the rules")
+kick ali | sendMessage("Please provide a reason")
+He insulted another member. | editMember["ali"] kick reason("He insulted another member")
+kick legarsolo | sendMessage("Please provide a reason")
+He insulted another member. | editMember["legarsolo"] kick reason("He insulted another member.")
+delete all message ali sent in channel test, and messages sam sent in channel farl | sendMessage("Please provide a reason for deleting those messages, and a limit")
+The member sent too many messages in a short period of time, no limit for ali and 30 for sam | deleteMessage channel["test"] member["ali"] limit(None) reason("The member sent too many messages in a short period of time."), deleteMessage channel["farl"] member["sam"] limit(30) reason("The member sent too many messages in a short period of time.") 
+delete all messages ali and sam sent in channel test, they are being disrespectful | sendMessage("Please provide a limit")
+10 | deleteMessage channel["test"] member["ali", "sam"] limit(10) reason("they are being disrespectful")
+delete the last 20 messages ali sent in channel farl, and the last 10 messages sam sent in channel test. They are being disrespectful | deleteMessage channel["farl"] member["ali"] limit(20) reason("They are being disrespectful"), deleteMessage channel["test"] member["sam"] limit(10) reason("They are being disrespectful")
+I would like for you to delete all messages sent here | sendMessage("Please provide a reason for deleting those messages, and a limit")
+The member sent too many messages in a short period of time, no limit | deleteMessage channel[1] limit(None) reason("The member sent too many messages in a short period of time.")
+delete all messages sent here | sendMessage("Please provide a reason for deleting those messages, and a limit")
+The member sent too many messages in a short period of time, no limit | deleteMessage channel[1] limit(None) reason("The member sent too many messages in a short period of time.")
+Hi wali, how are you ? | sendMessage("Hi there! I'm doing well, thank you. How can I help you today?")
+kick <@644988173428064266> | sendMessage("Please provide a reason")
+He is not following the rules | editMember[644988173428064266] kick reason("He is not following the rules")
+delete message sent by 1234567890, member is spamming | sendMessage("Please provide a limit")
+10 | deleteMessage channel[1] member[1234567890] limit(10) reason("member is spamming")
+delete messages in all channels before 12 March 2024, cleaning up | sendMessage("Please provide a limit")
+100 | deleteMessage channel[0] before(2024-03-12 00:00:00) limit(100) reason("cleaning up")
+delete last 50 messages in channel general, member is flooding | deleteMessage channel["general"] limit(50) reason("member is flooding")
+delete message 9876543210, violation of rules | deleteMessage[9876543210] reason("violation of rules")
+remove role moderator from member 1122334455 | editMember[1122334455] removeRole["moderator"]
+add role admin to member 1122334455 | editMember[1122334455] addRole["admin"]
+ban member 9988776655, spamming in multiple channels | editMember[9988776655] ban reason("spamming in multiple channels")
+delete all messages from member 9988776655 in channel general, no limit | sendMessage("Please provide a reason for deleting those messages")
+member is continuously spamming | deleteMessage channel["general"] member[9988776655] limit(None) reason("member is continuously spamming")
+kick member 4433221100, inappropriate behavior | editMember[4433221100] kick reason("inappropriate behavior")
+timeout member 3344556677 for 5 mins, offensive language | editMember[3344556677] timeout duration("5 MINS") reason("member used offensive language")
+delete messages from member 2233445566 containing 'spoiler', max 20, inappropriate content | deleteMessage channel[1] member[2233445566] message_contains["spoiler"] limit(20) reason("inappropriate content")
+delete messages from member 5566778899 before message 9988776655, limit 15, cleanup | deleteMessage member[5566778899] before(9988776655) limit(15) reason("cleanup")
+mute soundboard member 4455667788, being disruptive | editMember[4455667788] muteSoundBoard
+delete all messages containing 'spam' in all channels, limit 50 | sendMessage("Please provide a reason")
+removing spam content | deleteMessage channel[0] message_contains["spam"] limit(50) reason("removing spam content")
+delete all messages with images in general channel, limit 30, image spam | deleteMessage channel["general"] attachement["image"] limit(30) reason("image spam")
+delete messages from 20 June 2023 in all channels, no limit, cleanup | sendMessage("Please provide a reason")
+cleanup required | deleteMessage channel[0] after(2023-06-20 00:00:00) limit(None) reason("cleanup required")
+delete messages with videos in channel media, limit 10, media cleanup | deleteMessage channel["media"] attachement["video"] limit(10) reason("media cleanup")
+unmute soundboard member 1122334455 | editMember[1122334455] unmuteSoundBoard
+add role moderator to member 5566778899 | editMember[5566778899] addRole["moderator"]
+remove role guest from member 9988776655 | editMember[9988776655] removeRole["guest"]
+delete all messages from 1231231231 and 3213213213 in all channels, they are spamming | sendMessage("Please provide a limit")
+no limit | deleteMessage channel[0] member[1231231231, 3213213213] limit(None) reason("they are spamming")
+delete last 15 messages from member 2342342342 in channel rules, they are breaking rules | deleteMessage channel["rules"] member[2342342342] limit(15) reason("they are breaking rules")
+ban ali and delete all messages he sent, he is insulting others | sendMessage("Please be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days")
+Previous 24 Hours | editMember["ali"] ban reason("he is insulting others") deleteMessage("Previous 24 Hours")
+ban ali, he is insulting others | editMember["ali"] ban reason("he is insulting others")
+kick ali, duration 1 day, he is being disrespectful | editMember["ali"] kick duration("1 DAY") reason("he is being disrespectful")
+ban ami and delete all the message she sent, she didn't follow the rules | sendMessage("Please be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days")
+Previous 3 Days | editMember["ami"] ban reason("she didn't follow the rules") deleteMessage("Previous 3 Days")
+Timeout ali for 24h hours he deidn't respect the rules | editMember["ali"] timeout duration("1 DAY") reason("he didn't respect the rules")
+ban alex and delete all the message he sent, he didn't follow the rules | sendMessage("Please be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days")
+24h | editMember["alex"] ban reason("he didn't follow the rules") deleteMessage("Previous 24 Hours")
+ban pierre and delete the messages he sent in the last 6h | sendMessage("Please provide a reason")
+He is being disrespectful | editMember["pierre"] ban reason("He is being disrespectful") deleteMessage("Previous 6 Hours")
+kick chabrier for 3h | sendMessage("Please provide a reason")
+He is being disrespectful | editMember["chabrier"] kick reason("He is being disrespectful") 
+timeout <@644988173428064266> for 3h , being disrespectful | sendMessage("valid timeout duration are 60 SECS, 5 MINS, 10 MINS, 1 HOUR, 1 DAY, and 1 WEEK")
+3h | sendMessage("valid timeout duration are: 60 SECS, 5 MINS, 10 MINS, 1 HOUR, 1 DAY, and 1 WEEK")
+1h | editMember[644988173428064266] timeout duration("1 HOUR") reason("being disrespectful")
+ban <@644988173428064266> , and all the message he sent in the last days | sendMessage("Please provide a reason, and valid options for message deletion when banning a user are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days, Previous 7 Days")
+He is being disrespectful | editMember[644988173428064266] ban reason("He is being disrespectful")
+ban <@644988173428064266> , and all the message he sent in the last days, he didn't follow the rules | sendMessage("Valid options for message deletion when banning a user are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days, Previous 7 Days")
+Previous 3 days | editMember[644988173428064266] ban reason("he didn't follow the rules") deleteMessage("Previous 3 Days")
+delete all the message ali sent and ban him |  sendMessage("Please provide a limit and reason for deleting the messages, and the reason for banning him")
+limit none, he is being disrespectful | deleteMessage channel[1] member["ali"] limit(None) reason("he is being disrespectful"), editMember["ali"] ban reason("he is being disrespectful")
+ban ali and delete all the messages he sent | sendMessage("What is the reason, and be precise for the message deletion part options are: Previous Hour, Previous 6 Hours, Previous 12 Hours, Previous 24 Hours, Previous 3 Days Previous 7 Days")
+He broke the rules 3 times, previous 24h | editMember["ali"] ban reason("He broke the rules 3 times") deleteMessage("Previous 24 Hours")

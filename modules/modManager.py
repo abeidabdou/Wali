@@ -1,7 +1,9 @@
 import discord
 
 from command.loadCommand import load_command
+from parameters.fetchSubscribedServers import fetch_servers
 from parameters.guildLanguage import guildLanguage
+from parameters.logActions import logActions
 from parameters.waliSetupManager import WaliSetupManager
 
 
@@ -54,8 +56,7 @@ class SendMessage:
         await command_func(self.ctx, messageToSend)
 
     async def log_action(self, log_action):
-        logsChannel = await WaliSetupManager(self.ctx.guild).get_or_create_logs_channel()
-        await logsChannel.send(log_action)
+        await logActions(log_action, self.ctx.guild)
 
 
 def mod_embed(mod):
@@ -92,6 +93,8 @@ async def createMod(ctx, mod, kicks, bans, timeouts, messages, language):
     messageToSend = None
 
     mod_found = False
+    wali_cannot_mod = False
+    guild_owner_cannnot_mod = False
 
     wali_mods_channel = await WaliSetupManager(ctx.guild).get_or_create_wali_mods_channel()
 
@@ -100,6 +103,12 @@ async def createMod(ctx, mod, kicks, bans, timeouts, messages, language):
             modEmbed = message.embeds[0]
             if modEmbed.title == mod.name:
                 mod_found = True
+
+            if ctx.client.user.id == mod.id:
+                wali_cannot_mod = True
+
+            if ctx.guild.owner_id == mod.id:
+                guild_owner_cannnot_mod = True
 
     if mod_found:
         if wali_mods_role not in mod.roles:
@@ -118,6 +127,12 @@ async def createMod(ctx, mod, kicks, bans, timeouts, messages, language):
                 messageToSend = f"{language['confirmation_timeout']}"
         else:
             messageToSend = f"{mod} {language['mod_already_exist']}"
+
+    elif wali_cannot_mod:
+        messageToSend = f"{language['wali_cannot_mod']}"
+
+    elif guild_owner_cannnot_mod:
+        messageToSend = f"{language['guild_owner_cannot_mod']}"
 
     else:
         await WaliSetupManager(ctx.guild).get_or_create_mod_channel()
@@ -244,12 +259,18 @@ wali_channel_name = 'wal-i'
 
 async def handle_reset_command(ctx, mod, kick, ban, timeout, message):
 
+    servers = fetch_servers()
+
+    language = guildLanguage(ctx.guild)
+
+    if ctx.guild.id not in servers:
+        await ctx.response.send_message(f"```{language['no_active_subscription']}```", ephemeral=True)
+        return
+
     if ctx.channel.name != 'wal-i-mods-channel' and ctx.channel.name != 'wal-i':
         await ctx.response.defer(ephemeral=True)
     else:
         await ctx.response.defer()
-
-    language = guildLanguage(ctx.guild)
 
     if ctx.user.id == ctx.guild.owner_id:
         await resetModStats(ctx, mod, language, kick, ban, timeout, message)
@@ -262,12 +283,18 @@ async def handle_reset_command(ctx, mod, kick, ban, timeout, message):
 
 async def handle_mod_command(ctx, mod, kicks, bans, timeouts, messages, action):
 
+    servers = fetch_servers()
+
+    language = guildLanguage(ctx.guild)
+
+    if ctx.guild.id not in servers:
+        await ctx.response.send_message(f"```{language['no_active_subscription']}```", ephemeral=True)
+        return
+
     if ctx.channel.name != 'wal-i-mods-channel' and ctx.channel.name != 'wal-i':
         await ctx.response.defer(ephemeral=True)
     else:
         await ctx.response.defer()
-
-    language = guildLanguage(ctx.guild)
 
     if ctx.user.id == ctx.guild.owner_id:
         await action(ctx, mod, kicks, bans, timeouts, messages, language)
@@ -296,12 +323,14 @@ class ModCommandsManager:
         async def wal_i_reset_mod(ctx, mod: discord.Member, kick: bool = False, ban: bool = False, timeout: bool = False, message: bool = False):
             await handle_reset_command(ctx, mod, kick, ban, timeout, message)
 
+
 class CheckUpdateModStats:
     def __init__(self, ctx):
         self.ctx = ctx
 
     async def checkModStats(self, value):
-        wali_mods_channel = discord.utils.get(self.ctx.guild.text_channels, name='wal-i-mods')
+        wali_mods_channel = discord.utils.get(
+            self.ctx.guild.text_channels, name='wal-i-mods')
         mod_can_action = False
 
         language = guildLanguage(self.ctx.guild)
@@ -323,7 +352,7 @@ class CheckUpdateModStats:
                                 else:
                                     await SendMessage(self.ctx).log_action(f"```{self.ctx.user.name} {language['mod_tried_limit_reached']} {value}```")
                                     await SendMessage(self.ctx).call_send_message_cmf(f"```{language['mod_limit_reached']} {value}```")
-                            
+
                             updated_embeds.append(updated_embed)
 
                         if mod_can_action:
@@ -332,7 +361,8 @@ class CheckUpdateModStats:
                                     for field in embed.fields:
                                         if field.name == value:
                                             index = embed.fields.index(field)
-                                            embed.set_field_at(index, name=field.name, value=str(int(field.value) + 1))
+                                            embed.set_field_at(
+                                                index, name=field.name, value=str(int(field.value) + 1))
 
                         await message.edit(embeds=updated_embeds)
                         break
@@ -349,8 +379,7 @@ class CheckUpdateModStats:
     async def modTimeout(self):
         mod_can_timeout = await self.checkModStats("Timeouts")
         return mod_can_timeout
-    
+
     async def modMessage(self):
         mod_can_delete_message = await self.checkModStats("Messages")
         return mod_can_delete_message
-

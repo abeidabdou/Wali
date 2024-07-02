@@ -5,6 +5,7 @@
     "channel": "Salon",
     "delete_message_invalid_permission": "J'ai pas la permission de supprimer ce message",
     "message_system": "Le message pourrais être un message système.",
+    "about_to_delete": "Vous êtes sur le point de supprimer",
     "confirmation_message": "Êtes-vous sûr de vouloir continuer ?",
     "confirmation_delete_no": "Vous avez annulé votre requête",
     "message_not_found": "J'ai pas retrouvé le message suivant",
@@ -98,6 +99,13 @@
     "no_role_found": "Je n'ai pas trouvé le rôle suivant",
     "was_given_role": "a reçu le rôle",
     "was_removed_role": "a perdu le rôle",
-    "invalid": "Ceci est invalide",
-    "try_again": "Veuillez réessayer"
+    "invalid": "J'ai pas pu performer la requête, veuillez réessayer s'il vous plaît",  
+    "try_again": "Veuillez réessayer",
+    "wali_setup_message": "La categorie Wal-i a été créée, le salon wal-i a été ajouté",
+    "no_valid_subscription": "Votre serveur n'a pas de subscription valide",
+    "no_active_subscription": "Votre serveur n'a pas de subscription active, si vous pensez que c'est une erreur, veuillez nous contacter",
+    "specify_limit": "Vous ne pouvez pas supprimer de messages sans spécifier une limite réelle, veuillez réessayer",
+    "wali_cannot_mod": "Je ne peux pas avoir le rôle de modérateur",
+    "guild_owner_cannot_mod": "Vous ne pouvez pas vous assigner le rôle de modérateur",
+    "log_message_deleted": "Message supprimé"
 }

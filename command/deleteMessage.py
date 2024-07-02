@@ -9,7 +9,7 @@ import validators
 
 from modules.modManager import CheckUpdateModStats
 from parameters.guildLanguage import guildLanguage
-from parameters.waliSetupManager import WaliSetupManager
+from parameters.logActions import logActions
 
 
 class ConfirmButton(discord.ui.Button):
@@ -74,13 +74,34 @@ async def parse_custom_datetime(custom_str):
     return None
 
 
+def logEmbed(ctxUser, value, reason, language):
+    log_embed = discord.Embed(
+        title=f"{language['log_message_deleted']} {language['by']} {ctxUser}",
+        description=value,
+        color=0xD48C70
+    ).add_field(name=language['reason_label'], value=reason)
+    return log_embed
+
+def extract_embed_content(message):
+    embed_contents = []
+    for embed in message.embeds:
+        parts = []
+        if embed.title:
+            parts.append(f"Title: {embed.title}")
+        if embed.description:
+            parts.append(f"Description: {embed.description}")
+        for field in embed.fields:
+            parts.append(f"{field.name}: {field.value}")
+        if embed.footer:
+            parts.append(f"Footer: {embed.footer.text}")
+        embed_contents.append('\n'.join(parts))
+    return '\n---\n'.join(embed_contents)
+
 async def deleteMessage(ctx, command):
 
     language = guildLanguage(ctx.guild)
 
     wali_mods_role_name = 'wal-i-mod'
-
-    logsChannel = await WaliSetupManager(ctx.guild).get_or_create_logs_channel()
 
     messageToSend = None
     before = None
@@ -95,6 +116,7 @@ async def deleteMessage(ctx, command):
     channels = []
     messages = []
     users = []
+    logsEmbed = []
     logs = []
     mod_tried_delete_by_date = False
     messages_deleted = 0
@@ -103,7 +125,7 @@ async def deleteMessage(ctx, command):
 
     matches_dict = {
         "channel": None,
-        "user": None,
+        "member": None,
         "before": None,
         "after": None,
         "message_contains": None,
@@ -126,7 +148,7 @@ async def deleteMessage(ctx, command):
             if ctx.user.id != ctx.guild.owner_id:
                 responses.append(f"{language['delete_message_no_permission']}")
                 logs.append(
-                    f"{ctx.user.name} {language['log_delete_message_no_permission']}")
+                    f"```{ctx.user.name} {language['log_delete_message_no_permission']}```")
                 return
             channels = [
                 channel for channel in ctx.guild.channels]
@@ -143,8 +165,8 @@ async def deleteMessage(ctx, command):
                 else:
                     responses.append(f"{language['no_channel_found']}: {name}")
 
-    if matches_dict["user"]:
-        urs = matches_dict["user"][1].split(',')
+    if matches_dict["member"]:
+        urs = matches_dict["member"][1].split(',')
         for user in urs:
             user = user.strip(" ").strip('"')
             member = ctx.guild.get_member(int(user)) if user.isdigit(
@@ -158,13 +180,17 @@ async def deleteMessage(ctx, command):
                     f"{language['no_member']}: {user}")
 
     if users:
+        remaining_users = []
         for user in users:
-            if ctx.user.id != ctx.guild.owner_id and (user.id == ctx.guild.owner_id or user.guild_permissions.administrator or wali_mods_role_name in [role.name for role in ctx.user.roles]):
+            if ctx.user.id != ctx.guild.owner_id and (user.id == ctx.guild.owner_id or user.guild_permissions.administrator or wali_mods_role_name in [role.name for role in user.roles]):
                 responses.append(
                     f"{language['delete_message_user_no_permission']} : {user.name}")
                 logs.append(
-                    f"{ctx.user.name} {language['log_delete_message_user_no_permission']} : {user.name}")
-                users.remove(user)
+                    f"```{ctx.user.name} {language['log_delete_message_user_no_permission']} : {user.name}```")
+            else:
+                remaining_users.append(user)
+
+        users = remaining_users
 
     channel_before = None
     channel_after = None
@@ -215,7 +241,7 @@ async def deleteMessage(ctx, command):
         responses.append(
             f"{language['mod_can_not_delete_by_date']}")
         logs.append(
-            f"{ctx.user.name} {language['log_mod_can_not_delete_by_date']}")
+            f"```{ctx.user.name} {language['log_mod_can_not_delete_by_date']}```")
 
     before_after = before and after
 
@@ -240,30 +266,34 @@ async def deleteMessage(ctx, command):
         attachement = matches_dict["attachement"][1].split(',')
         attachement = [word.strip(" ").strip('"') for word in attachement]
 
-    limit = int(matches_dict["limit"][1]) if matches_dict["limit"] else None
-
-    if limit is None:
-        if ctx.user.id == ctx.guild.owner_id:
-            limit = None
-        else:
-            limit = 5
+    limit = matches_dict["limit"][1] if matches_dict["limit"] else None
 
     if matches_dict["reason"]:
         reason = matches_dict["reason"][1].strip(" ").strip('"')
 
     if channels:
+        filtered_channels = []
         for channel in channels:
-            if channel.type == discord.ChannelType.forum or channel.type == discord.ChannelType.category:
-                channels.remove(channel)
+            if isinstance(channel, discord.CategoryChannel) or isinstance(channel, discord.ForumChannel) or isinstance(channel, discord.VoiceChannel):
                 responses.append(
                     f"{language['delete_message_category_and_forum_no']}: {channel.name} {language['is']} {channel.type}")
-
-            elif "wal-i" in channel.name or ctx.user not in channel.members:
-                channels.remove(channel)
+            elif ctx.user not in channel.members or ("wal-i" in channel.name and ctx.user.id != ctx.guild.owner_id):
                 responses.append(
                     f"{language['delete_message_no_permission_channel']} : {channel.name}")
                 logs.append(
-                    f"{ctx.user.name} {language['log_delete_message_in_channel_no_permission']} : {channel.name}")
+                    f"```{ctx.user.name} {language['log_delete_message_in_channel_no_permission']} : {channel.name}```")
+            else:
+                filtered_channels.append(channel)
+        channels = filtered_channels
+
+    if limit:
+        if limit.isdigit():
+            limit = int(limit)
+        elif limit == "None" and ctx.user.id == ctx.guild.owner_id:
+            limit = None
+        else:
+            responses.append(f"{language['specify_limit']}")
+            channels = []
 
     if channels:
         for channel in channels:
@@ -303,16 +333,13 @@ async def deleteMessage(ctx, command):
                     if attachement_found is False:
                         continue
 
-                if matches_dict["user"]:
+                if matches_dict["member"]:
                     if users and message.author not in users:
                         continue
                     if not users:
                         break
 
                 messages.append(message)
-
-    if not messages:
-        responses.append(f"{language['no_message_found']}")
 
     if matches_dict["deleteMessage"]:
         msgs = [int(id) for id in matches_dict["deleteMessage"][1].split(',')]
@@ -324,11 +351,18 @@ async def deleteMessage(ctx, command):
                 responses.append(
                     f"{language['message_not_found']} : {message}")
 
-    view = ConfirmView(language=language)
-    confirmation_message = await ctx.followup.send(content=f"```{language['confirmation_message']}```", view=view, ephemeral=True)
-    await view.wait()
+    if not messages:
+        responses.append(f"{language['no_message_found']}")
 
-    if view.value and not miscellaneous_match:
+    view = None
+    if messages:
+        view = ConfirmView(language=language)
+        conditional_message_part = f"{language['about_to_delete']} {len(messages)} messages\n" if len(
+            messages) > 1 else f"{language['about_to_delete']} {len(messages)} message\n"
+        confirmation_message = await ctx.followup.send(content=f"```{conditional_message_part} {language['confirmation_message']}```", view=view, ephemeral=True)
+        await view.wait()
+
+    if view and view.value and not miscellaneous_match:
         await confirmation_message.delete()
         for message in messages:
             mod_can_delete_messages = await CheckUpdateModStats(ctx).modMessage()
@@ -338,23 +372,24 @@ async def deleteMessage(ctx, command):
                         for thread in message.channel.threads:
                             if message.id == thread.id:
                                 await thread.delete()
+                    embed_content = extract_embed_content(message)
+                    combined_content = message.content + "\nEmbeds:\n" + embed_content if message.content and embed_content else message.content or embed_content
                     await message.delete()
-                    await asyncio.sleep(0.5)
                     responses.append(
-                        f"{language['message_deleted']} : {message.id} {language['channel']} : {message.channel.name}")
-                    logs.append(
-                        f"{ctx.user.name} {language['deleted_messages']} '{message.content}' {language['channel']} : {message.channel.name}\n{language['reason_label']} : {reason}")
+                        f"```{language['message_deleted']} : {message.id}\n{language['channel']} : {message.channel.name}```")
+                    logsEmbed.append(logEmbed(ctx.user.name, combined_content, reason, language))
+                    await asyncio.sleep(0.09)
                 except discord.Forbidden:
                     responses.append(
                         f"{language['delete_message_invalid_permission']} : {message.id} {language['channel']} : {message.channel.name}, {language['message_system']}")
 
-    messageToSend = '\n'.join(responses)
+    messageToSend = responses
 
-    if view.value is None:
+    if view and view.value is None:
         await confirmation_message.delete()
         messageToSend = f"{language['confirmation_none']}"
 
-    if view.value is False:
+    if view and view.value is False:
         messageToSend = f"{language['confirmation_delete_no']}, {language['deleted_none']}"
         await confirmation_message.delete()
 
@@ -362,8 +397,11 @@ async def deleteMessage(ctx, command):
         messageToSend = f"{language['delete_message_invalid_parameter']} : {miscellaneous_match[0]}"
 
     if logs:
-        log_action = '\n'.join(logs)
-        await logsChannel.send(f"```{log_action}```")
+        log_action = logs
+        await logActions(log_action, ctx.guild)
+
+    if logsEmbed:
+        await logActions(logsEmbed, ctx.guild)
 
     command_name = "sendMessage"
     command_func = await load_command(command_name)

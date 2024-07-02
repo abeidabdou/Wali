@@ -5,6 +5,7 @@
     "channel": "channel",
     "delete_message_invalid_permission": "I don't have permission to delete this message",
     "message_system": "The message could be a system message.",
+    "about_to_delete": "You are about to delete",
     "confirmation_message": "Are you sure you want to continue?",
     "confirmation_delete_no": "You cancelled your request",
     "message_not_found": "I could not find the following message",
@@ -91,6 +92,12 @@
     "no_role_found": "I couldn't find the following role",
     "was_given_role": "was given the role",
     "was_removed_role": "lost the role",
-    "invalid": "This is invalid",
-    "try_again": "Please try your request again"
+    "invalid": "Could not complete the request, please try again",
+    "try_again": "Please try your request again",
+    "wali_setup_message": "Wal-i category was created, wal-i's channel was added",
+    "no_active_subscription": "Your server doesn't have an active subscription to Wal-i, if you think it's a mistake please contact us",
+    "specify_limit": "You can't delete messages without specifying a real limit, please try again",
+    "wali_cannot_mod": "I can't have the role moderator",
+    "guild_owner_cannot_mod": "You can't set yoursefl as a moderator",
+    "log_message_deleted": "Message deleted"
 }
