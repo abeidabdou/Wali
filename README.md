@@ -81,7 +81,7 @@ Contributions to Wali are welcome! Please follow the standard fork-and-pull requ
 
 ## License
 
-Wali is licensed under a custom license. For more details, refer to the README.md file.
+WaliTheBot © 2024 by Al-abeid Abdou Soimadou is licensed under CC BY-NC-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ## Support
 
