@@ -3,3 +3,9 @@
 __pycache__/
 
 .env
+
+.fine_tuning_instructions
+
+.fine_tuning_training_instructions
+
+.README
