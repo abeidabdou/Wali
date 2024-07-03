@@ -5,7 +5,8 @@ import google.api_core.exceptions
 
 
 async def generate_instructions(user_request: str):
-    creds = load_creds()
+    
+    creds = load_creds() #You can replace the creds with an API key since this ain't using a tunned modal
 
     genai.configure(credentials=creds)
 
