@@ -4,6 +4,6 @@ __pycache__/
 
 .env
 
-fine_tuning_instructions.csv
+fine_tuning_instructions
 
-fine_tuning_training_instructions.txt
+fine_tuning_training_instructions
