@@ -4,8 +4,8 @@
 
 Wali is a versatile Discord bot designed to enhance the functionality and interactivity of Discord servers. It leverages the power of AI through Google Gemini large languages of model to perform a wide range of tasks by processing natural language into discord commands, from managing server roles and permissions to banning, kicking, timing out, muting and deleting messages.
 
-I am not using json for the command retrieval, you should like at the ai studio file to see how the Language Model is giving out the commands
-I also remarked that instead of giving different kind of example to explain what I need fro the LLM, repeating the same example also helped.(Don't know why)
+I am not using json for the command retrieval, you should look at the ai studio file to see how the Language Model is giving out the commands
+I also remarked that instead of giving different kind of example to explain what I need from the LLM, repeating the same examples also helped.(Don't know why)
 
 ## Features
 
